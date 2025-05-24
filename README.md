@@ -4,7 +4,7 @@ A simple web application to find out who isn't following you back on Instagram.
 
 ## Description
 
-Ever wondered who isn't following you back on Instagram? Simply request your data from Instagram and upload them to find out! No account information is required and no data is collected. Check out the live site here: [InstaUnfollow](https://insta-unfollow.vercel.app/)
+Ever wondered who isn't following you back on Instagram? Request your data from Instagram and upload it to find out! No account information is required, and no data is collected. Check out the live site here: [InstaUnfollow](https://insta-unfollow.vercel.app/)
 
 ## Running Locally
 
