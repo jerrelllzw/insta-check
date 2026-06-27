@@ -71,7 +71,6 @@ export default function App() {
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        {/* Main */}
         <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center px-5 py-12 sm:px-8 sm:py-20">
           {!results ? (
             <>
@@ -207,8 +206,6 @@ export default function App() {
             </div>
           )}
         </main>
-
-        {/* Footer */}
       </div>
 
       <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />

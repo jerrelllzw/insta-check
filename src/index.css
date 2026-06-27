@@ -21,10 +21,6 @@
   .text-ig-gradient {
     @apply bg-ig-gradient bg-clip-text text-transparent;
   }
-
-  .glass {
-    @apply border border-white/10 bg-white/[0.04] backdrop-blur-xl;
-  }
 }
 
 /* Slim, branded scrollbars */
