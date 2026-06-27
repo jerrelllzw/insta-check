@@ -8,11 +8,20 @@ import {
 	Link,
 	Thead,
 	Th,
+	Text,
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const ResultsTable = (props) => {
 	const { results } = props;
+
+	if (results.length === 0) {
+		return (
+			<Text color='#EEEEEE' minWidth='13em' textAlign='center'>
+				Nothing to show here 🎉
+			</Text>
+		);
+	}
 
 	return (
 		<TableContainer
@@ -30,9 +39,9 @@ const ResultsTable = (props) => {
 					</Tr>
 				</Thead>
 				<Tbody>
-					{results.map((result) => (
-						<Tr key={result} color='#EEEEEE'>
-							<Td>{results.indexOf(result) + 1}</Td>
+					{results.map((result, index) => (
+						<Tr key={`${result}-${index}`} color='#EEEEEE'>
+							<Td>{index + 1}</Td>
 							<Td>
 								<Link href={'https://www.instagram.com/' + result} isExternal>
 									{result}

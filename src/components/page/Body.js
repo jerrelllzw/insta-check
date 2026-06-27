@@ -69,13 +69,13 @@ const Body = (props) => {
 						<Flex justifyContent='center' gap={10} flexDirection={{ base: 'column', md: 'row' }}>
 							<Flex flexDirection='column' alignItems='center' gap={5}>
 								<Heading color='#EEEEEE' size='md'>
-									Mutually Following 🙂
+									Mutually Following 🙂 ({happyResults.length})
 								</Heading>
 								<ResultsTable results={happyResults} />
 							</Flex>
 							<Flex flexDirection='column' alignItems='center' gap={5}>
 								<Heading color='#EEEEEE' size='md'>
-									Not following back ☹️
+									Not following back ☹️ ({sadResults.length})
 								</Heading>
 								<ResultsTable results={sadResults} />
 							</Flex>
