@@ -16,8 +16,8 @@ const BackButton = (props) => {
 	};
 
 	return (
-		<Button colorScheme='teal' onClick={reset} style={{ marginBottom: '3em' }}>
-			Back
+		<Button variant='ghostLight' size='lg' px={10} onClick={reset}>
+			← Back
 		</Button>
 	);
 };

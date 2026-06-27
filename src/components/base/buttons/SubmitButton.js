@@ -67,7 +67,7 @@ const SubmitButton = (props) => {
 	};
 
 	return (
-		<Button colorScheme='teal' onClick={handleOnClick} style={{ marginBottom: '3em' }}>
+		<Button variant='brand' size='lg' px={10} onClick={handleOnClick}>
 			Get Results
 		</Button>
 	);

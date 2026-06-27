@@ -5,7 +5,7 @@ const HelpButton = (props) => {
 	const { onOpen } = props;
 
 	return (
-		<Button onClick={onOpen} colorScheme='whiteAlpha' style={{ marginLeft: '1em' }}>
+		<Button onClick={onOpen} variant='ghostLight' size='sm'>
 			Need Help?
 		</Button>
 	);
