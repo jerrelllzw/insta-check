@@ -9,7 +9,7 @@ const Header = (props) => {
 		<Flex alignItems='center' padding='2em'>
 			<Flex style={{ marginRight: 'auto' }}>
 				<Heading color='#c1558b'>Insta</Heading>
-				<Heading color='#8a49a1'>Unfollow</Heading>
+				<Heading color='#8a49a1'>Check</Heading>
 			</Flex>
 
 			<HelpButton onOpen={onOpen}/>
