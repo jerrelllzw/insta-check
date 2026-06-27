@@ -47,13 +47,19 @@ async function filesFromDrop(dataTransfer) {
   return files;
 }
 
-export default function Dropzone({ label, hint, files, onFiles }) {
+export default function Dropzone({ label, hint, files, onFiles, onReject }) {
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
 
   const accept = (incoming) => {
-    const list = Array.from(incoming || []).filter(isExportFile);
-    if (list.length) onFiles(list);
+    const all = Array.from(incoming || []);
+    const list = all.filter(isExportFile);
+    if (list.length) {
+      onFiles(list);
+    } else if (all.length) {
+      // User picked something, but nothing looked like an Instagram export.
+      onReject?.(all.length === 1 ? all[0].name : null);
+    }
   };
 
   const handleDrop = async (e) => {

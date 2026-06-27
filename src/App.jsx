@@ -136,6 +136,14 @@ export default function App() {
                   hint="followers_1.json, following.json…"
                   files={files}
                   onFiles={setFiles}
+                  onReject={(name) =>
+                    showToast(
+                      name
+                        ? `"${name}" isn't an Instagram export file — drop followers_1.json and following.json.`
+                        : "Those don't look like Instagram export files — drop followers_1.json and following.json.",
+                      'error'
+                    )
+                  }
                 />
 
                 {files.length > 0 && (
