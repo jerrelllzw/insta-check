@@ -167,14 +167,8 @@ export default function App() {
           ) : (
             <div className="w-full animate-fade-up">
               {/* Stats */}
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-4">
                 <StatCard label="Following" value={total} dot="bg-white/40" />
-                <StatCard label="Mutuals" value={results.mutuals.length} dot="bg-emerald-400" />
-                <StatCard
-                  label="Not following back"
-                  value={results.notFollowingBack.length}
-                  dot="bg-ig-pink"
-                />
                 <StatCard label="Follow-back rate" value={`${rate}%`} dot="bg-ig-purple" />
               </div>
 
