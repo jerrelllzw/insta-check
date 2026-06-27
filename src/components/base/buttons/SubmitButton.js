@@ -46,7 +46,7 @@ const SubmitButton = (props) => {
 					(follower) => follower.string_list_data[0].value
 				);
 				const following = followingData.relationships_following.map(
-					(following) => following.string_list_data[0].value
+					(following) => following.title
 				);
 
 				const mutualFollowing = following.filter((user) =>
