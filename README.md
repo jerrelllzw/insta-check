@@ -2,7 +2,7 @@
 
 Find out who isn't following you back on Instagram — right in your browser. Upload your data export, get instant results. No login, and nothing ever leaves your device.
 
-🔗 Live site: [insta-unfollow.vercel.app](https://insta-unfollow.vercel.app/)
+🔗 Live site: [jerrelllzw.github.io/insta-check](https://jerrelllzw.github.io/insta-check/)
 
 ## Tech
 
