@@ -3,8 +3,14 @@ import Dropzone from './components/Dropzone';
 import HelpModal from './components/HelpModal';
 import ResultsList from './components/ResultsList';
 import Toast from './components/Toast';
-import { LockIcon } from './components/Icons';
-import { compareFollows, FOLLOWERS_FILENAME, FOLLOWING_FILENAME } from './lib/instagram';
+import { LockIcon, CheckIcon, XIcon } from './components/Icons';
+import {
+  compareFollows,
+  FOLLOWERS_FILENAME,
+  FOLLOWING_FILENAME,
+  FOLLOWERS_PATTERN,
+  FOLLOWING_PATTERN,
+} from './lib/instagram';
 
 const FEATURES = [
   { emoji: '🔒', label: 'No login' },
@@ -13,22 +19,25 @@ const FEATURES = [
 ];
 
 export default function App() {
-  const [followersFile, setFollowersFile] = useState(null);
-  const [followingFile, setFollowingFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [toast, setToast] = useState(null);
 
+  // Sort whatever was dropped into the two kinds of file Instagram exports.
+  const followersFiles = files.filter((f) => FOLLOWERS_PATTERN.test(f.name));
+  const followingFile = files.find((f) => FOLLOWING_PATTERN.test(f.name));
+
   const showToast = (message, type = 'success') => setToast({ message, type });
 
   const handleReveal = async () => {
-    if (!followersFile) return showToast(`Please upload ${FOLLOWERS_FILENAME}`, 'error');
-    if (!followingFile) return showToast(`Please upload ${FOLLOWING_FILENAME}`, 'error');
+    if (!followersFiles.length) return showToast(`Couldn't find ${FOLLOWERS_FILENAME}`, 'error');
+    if (!followingFile) return showToast(`Couldn't find ${FOLLOWING_FILENAME}`, 'error');
 
     setLoading(true);
     try {
-      const data = await compareFollows(followersFile, followingFile);
+      const data = await compareFollows(followersFiles, followingFile);
       setResults(data);
       showToast('Done — here are your results!');
     } catch (err) {
@@ -40,8 +49,7 @@ export default function App() {
 
   const reset = () => {
     setResults(null);
-    setFollowersFile(null);
-    setFollowingFile(null);
+    setFiles([]);
   };
 
   const total = results ? results.mutuals.length + results.notFollowingBack.length : 0;
@@ -112,12 +120,9 @@ export default function App() {
                 style={{ animationDelay: '240ms' }}
               >
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                  <div>
-                    <h2 className="font-display text-lg font-bold tracking-tight">
-                      Upload your two files
-                    </h2>
-                    <p className="text-sm text-white/45">From the “Followers and following” export</p>
-                  </div>
+                  <h2 className="font-display text-lg font-bold tracking-tight">
+                    Upload your export
+                  </h2>
                   <button
                     onClick={() => setHelpOpen(true)}
                     className="rounded-full px-3 py-1.5 text-sm text-ig-pink transition hover:bg-ig-pink/10"
@@ -126,22 +131,29 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Dropzone
-                    step={1}
-                    label="Followers"
-                    expectedName={FOLLOWERS_FILENAME}
-                    file={followersFile}
-                    onFile={setFollowersFile}
-                  />
-                  <Dropzone
-                    step={2}
-                    label="Following"
-                    expectedName={FOLLOWING_FILENAME}
-                    file={followingFile}
-                    onFile={setFollowingFile}
-                  />
-                </div>
+                <Dropzone
+                  label="Followers & following"
+                  hint="followers_1.json, following.json…"
+                  files={files}
+                  onFiles={setFiles}
+                />
+
+                {files.length > 0 && (
+                  <div className="mt-4 flex flex-wrap gap-2 text-sm">
+                    <DetectChip
+                      ok={followersFiles.length > 0}
+                      label={
+                        followersFiles.length
+                          ? `${followersFiles.length} followers file${followersFiles.length === 1 ? '' : 's'}`
+                          : 'No followers file'
+                      }
+                    />
+                    <DetectChip
+                      ok={!!followingFile}
+                      label={followingFile ? 'following.json' : 'No following.json'}
+                    />
+                  </div>
+                )}
 
                 <button
                   onClick={handleReveal}
@@ -200,6 +212,21 @@ export default function App() {
       <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
       <Toast toast={toast} onClose={() => setToast(null)} />
     </div>
+  );
+}
+
+function DetectChip({ ok, label }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-medium ${
+        ok
+          ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300'
+          : 'border-amber-400/30 bg-amber-400/10 text-amber-300'
+      }`}
+    >
+      {ok ? <CheckIcon className="h-3.5 w-3.5" /> : <XIcon className="h-3.5 w-3.5" />}
+      {label}
+    </span>
   );
 }
 

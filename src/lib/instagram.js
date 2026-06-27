@@ -1,6 +1,11 @@
 // Expected filenames from the Instagram "Followers and following" export.
+// Followers are paginated (~1k per file): followers_1.json, followers_2.json, …
 export const FOLLOWERS_FILENAME = 'followers_1.json';
 export const FOLLOWING_FILENAME = 'following.json';
+
+// Matchers used to pick the right files out of a dropped folder / multi-select.
+export const FOLLOWERS_PATTERN = /^followers(_\d+)?\.json$/i;
+export const FOLLOWING_PATTERN = /^following\.json$/i;
 
 const readJsonFile = (file) =>
   new Promise((resolve, reject) => {
@@ -16,7 +21,7 @@ const readJsonFile = (file) =>
     reader.readAsText(file);
   });
 
-// followers_1.json is an array of entries; the handle lives in string_list_data.
+// Each followers_N.json is an array of entries; the handle lives in string_list_data.
 const parseFollowers = (data) =>
   data.map((entry) => entry.string_list_data[0].value);
 
@@ -25,18 +30,19 @@ const parseFollowing = (data) =>
   data.relationships_following.map((entry) => entry.title);
 
 /**
- * Compares the two export files and returns who follows back and who doesn't.
+ * Compares the export files and returns who follows back and who doesn't.
+ * `followersFiles` is an array so paginated followers_N.json files are merged.
  * Everything runs locally — files never leave the browser.
  */
-export async function compareFollows(followersFile, followingFile) {
-  const [followersData, followingData] = await Promise.all([
-    readJsonFile(followersFile),
+export async function compareFollows(followersFiles, followingFile) {
+  const [followersDatas, followingData] = await Promise.all([
+    Promise.all(followersFiles.map(readJsonFile)),
     readJsonFile(followingFile),
   ]);
 
   let followers, following;
   try {
-    followers = new Set(parseFollowers(followersData));
+    followers = new Set(followersDatas.flatMap(parseFollowers));
     following = parseFollowing(followingData);
   } catch {
     throw new Error(

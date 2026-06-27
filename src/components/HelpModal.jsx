@@ -5,12 +5,12 @@ import { FOLLOWERS_FILENAME, FOLLOWING_FILENAME } from '../lib/instagram';
 const STEPS = [
   'Open Instagram → Settings → Accounts Center',
   'Go to "Your information and permissions"',
-  'Tap "Download your information" → "Download or transfer information"',
-  'Choose "Some of your information"',
-  'Select "Followers and following" under Connections',
-  'Tap Next, then choose "Download to device"',
+  'Tap "Export your information" → "Create export"',
+  'Choose your profile',
+  'Pick "Export to device"',
   'Set Date range to "All time" and Format to "JSON"',
-  'Tap "Create files" and wait for the email when it\'s ready',
+  'Tap "Start export"',
+  'Wait for the email when it\'s ready, then download',
 ];
 
 export default function HelpModal({ open, onClose }) {
@@ -40,7 +40,7 @@ export default function HelpModal({ open, onClose }) {
                 How to get your data
               </h2>
               <p className="mt-1 text-sm text-white/50">
-                You'll upload two files from the export below.
+                Followers may be split across several files — upload them all.
               </p>
             </div>
             <button
