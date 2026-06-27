@@ -11,9 +11,9 @@ Find out who isn't following you back on Instagram — right in your browser. Up
 
 ## How it works
 
-1. Request your data from Instagram: **Settings → Accounts Center → Your information and permissions → Download your information**. Select **Followers and following**, choose **JSON** format, and **All time** range.
-2. Once Instagram emails you the export, unzip it and grab `followers_1.json` and `following.json`.
-3. Upload both files here. The comparison runs entirely in your browser — no server, no tracking.
+1. Request your data from Instagram: **Settings → Accounts Center → Your information and permissions → Export your information**. Create an export for your profile, choose **Export to device**, and set the date range to **All time** and the format to **JSON**.
+2. Once Instagram emails you that the export is ready, download and unzip it, then grab the followers and following files. Followers may be split across several files (`followers_1.json`, `followers_2.json`, …); grab them all along with `following.json`.
+3. Drop the files in here. InstaCheck merges the paginated followers files and compares them against your following list — who follows you back, and who doesn't. The whole comparison runs in your browser, so no server, no login, and nothing leaves your device.
 
 ## Running locally
 
